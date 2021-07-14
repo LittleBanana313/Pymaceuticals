@@ -1,7 +1,7 @@
 # Pymaceuticals
 Struggles and successes in Matplotlib HW
 
-__Your tasks are to do the following:
+__Your tasks are to do the following:__
 
 
 * Before beginning the analysis, check the data for any mouse ID with duplicate time points and remove any data associated with that mouse ID.
