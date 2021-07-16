@@ -1,0 +1,45 @@
+# Dependencies and Setup
+import matplotlib.pyplot as plt
+import pandas as pd
+import scipy.stats as st
+import numpy as np
+
+# Study data files
+mouse_metadata_path = "data/Mouse_metadata.csv"
+study_results_path = "data/Study_results.csv"
+
+# Read the mouse data and the study results
+mouse_metadata = pd.read_csv(mouse_metadata_path)
+study_results = pd.read_csv(study_results_path)
+
+# Combine the data into a single dataset
+df = pd.merge(mouse_metadata, study_results, how='outer', on='Mouse ID')
+# Display the data table for preview
+df.head(20)
+
+
+
+# Checking the number of mice.
+Nmice = len(pd.unique(df['Mouse ID']))
+Drug = len(pd.unique(df['Drug Regimen']))
+summary = pd.DataFrame({'Number of Mice':[Nmice], 'Number of Drug Regimens':[Drug]})
+summary
+
+
+# Getting the duplicate mice by ID number that shows up for Mouse ID and Timepoint. 
+dup_id = df.loc[df.duplicated(subset=['Mouse ID','Timepoint']),'Mouse ID'].unique()
+dup_id
+
+
+# Optional: Get all the data for the duplicate mouse ID. 
+df["Mouse ID"] == 'g989'
+
+
+# Create a clean DataFrame by dropping the duplicate mouse by its ID.
+cleandf = df[df['Mouse ID'].isin(dup_id)==False]
+unique = cleandf["Mouse ID"].nunique()
+clean_mouse = cleandf
+clean_mouse.head()
+
+
+unique
